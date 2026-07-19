@@ -27,12 +27,6 @@ public class TitleScene extends JPanel {
 
     public TitleScene(Game game) {
         this.game = game;
-        // initBoard();
-        // initTitle();
-    }
-
-    private void initBoard() {
-
     }
 
     public void start() {
@@ -49,13 +43,8 @@ public class TitleScene extends JPanel {
 
     public void stop() {
         try {
-            if (timer != null) {
-                timer.stop();
-            }
-
-            if (audioPlayer != null) {
-                audioPlayer.stop();
-            }
+            if (timer != null) timer.stop();
+            if (audioPlayer != null) audioPlayer.stop();
         } catch (Exception e) {
             System.err.println("Error closing audio player.");
         }
@@ -64,33 +53,27 @@ public class TitleScene extends JPanel {
     private void initTitle() {
         var ii = new ImageIcon(IMG_TITLE);
         image = ii.getImage();
-
     }
 
     private void initAudio() {
         try {
             String filePath = "src/audio/title.wav";
             audioPlayer = new AudioPlayer(filePath);
-
             audioPlayer.play();
         } catch (Exception e) {
             System.err.println("Error with playing sound.");
         }
-
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         doDrawing(g);
     }
 
     private void doDrawing(Graphics g) {
-
         g.setColor(Color.black);
         g.fillRect(0, 0, d.width, d.height);
-
         g.drawImage(image, 0, -80, d.width, d.height, this);
 
         if (frame % 60 < 30) {
@@ -103,13 +86,11 @@ public class TitleScene extends JPanel {
         String text = "Press SPACE to Start";
         int stringWidth = g.getFontMetrics().stringWidth(text);
         int x = (d.width - stringWidth) / 2;
-        // int stringHeight = g.getFontMetrics().getAscent();
-        // int y = (d.height + stringHeight) / 2;
         g.drawString(text, x, 600);
 
         g.setColor(Color.gray);
-        g.setFont(g.getFont().deriveFont(10f));
-        g.drawString("Game by Chayapol", 10, 650);
+        g.setFont(g.getFont().deriveFont(16f));
+        g.drawString("Team Members: Swan Yi Aung", 10, 650);
 
         Toolkit.getDefaultToolkit().sync();
     }
@@ -124,7 +105,6 @@ public class TitleScene extends JPanel {
     }
 
     private class GameCycle implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             doGameCycle();
@@ -132,21 +112,12 @@ public class TitleScene extends JPanel {
     }
 
     private class TAdapter extends KeyAdapter {
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-
-        }
-
         @Override
         public void keyPressed(KeyEvent e) {
-            System.out.println("Title.keyPressed: " + e.getKeyCode());
-            int key = e.getKeyCode();
-            if (key == KeyEvent.VK_SPACE) {
-                // Load the next scene
-                game.loadScene2();
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                // Assuming your Game.java has a method to load Scene1
+                game.loadScene1();
             }
-
         }
     }
 }

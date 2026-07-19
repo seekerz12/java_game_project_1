@@ -32,6 +32,11 @@ public class Enemy extends Sprite {
 
         this.x += direction;
     }
+
+    @Override
+    public void act() {
+
+    }
 /* 
     public Bomb getBomb() {
 

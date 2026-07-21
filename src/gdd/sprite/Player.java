@@ -1,55 +1,90 @@
 package gdd.sprite;
 
 import static gdd.Global.*;
-import java.awt.Rectangle;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
 public class Player extends Sprite {
 
-    private static final int START_X = 50;
-    private static final int START_Y = BOARD_HEIGHT / 2;
-    private int width;
-    private int height;
-    private int currentSpeed = 2;
-    private int shotsUpgrade = 1;
+    private static final int START_X = 50, START_Y = BOARD_HEIGHT / 2;
+    private int width, height, currentSpeed = 2, shotsUpgrade = 1;
+    private boolean hasThreeWay = false;
+    private int lives = 3, invulnerableTimer = 0;
     protected int dy;
+
+    // Animation Variables
+    private Image[] frames;
+    private int currentFrame = 0;
+    private int animationTick = 0;
+    private final int ANIMATION_SPEED = 10;
 
     public Player() {
         initPlayer();
     }
 
     private void initPlayer() {
-        var ii = new ImageIcon(IMG_PLAYER);
-        var scaledImage = ii.getImage().getScaledInstance(ii.getIconWidth() * SCALE_FACTOR,
-                ii.getIconHeight() * SCALE_FACTOR,
-                java.awt.Image.SCALE_SMOOTH);
-        setImage(scaledImage);
+        try {
+            // 1. Load the new 2-frame spritesheet
+            BufferedImage spriteSheet = ImageIO.read(new File("src/images/plane1.png"));
 
-        width = scaledImage.getWidth(null);
-        height = scaledImage.getHeight(null);
+            // 2. Calculate the size of a single frame (divide by 2 instead of 3)
+            int frameWidth = spriteSheet.getWidth();
+            int frameHeight = spriteSheet.getHeight() / 2;
+
+            // Initialize array for 2 frames
+            frames = new Image[2];
+
+            // 3. Loop through and clip each of the 2 frames
+            for (int i = 0; i < 2; i++) {
+                BufferedImage subImg = spriteSheet.getSubimage(0, i * frameHeight, frameWidth, frameHeight);
+
+                frames[i] = subImg.getScaledInstance(frameWidth * SCALE_FACTOR,
+                        frameHeight * SCALE_FACTOR, java.awt.Image.SCALE_SMOOTH);
+            }
+
+            setImage(frames[0]);
+            width = frames[0].getWidth(null);
+            height = frames[0].getHeight(null);
+
+        } catch (Exception e) {
+            System.err.println("Error loading player spritesheet: " + e.getMessage());
+        }
+
         setX(START_X);
         setY(START_Y);
     }
 
     public int getSpeed() { return currentSpeed; }
-
-    public int setSpeed(int speed) {
-        if (speed < 1) speed = 1;
-        if (speed > 10) speed = 10;
-        this.currentSpeed = speed;
-        return currentSpeed;
-    }
-
+    public void setSpeed(int speed) { this.currentSpeed = Math.min(Math.max(speed, 1), 10); }
     public int getShotsUpgrade() { return shotsUpgrade; }
+    public void setShotsUpgrade(int limit) { this.shotsUpgrade = Math.min(limit, 4); }
+    public boolean isHasThreeWay() { return hasThreeWay; }
+    public void setHasThreeWay(boolean hasThreeWay) { this.hasThreeWay = hasThreeWay; }
+    public int getLives() { return lives; }
+    public boolean isInvulnerable() { return invulnerableTimer > 0; }
 
-    public void setShotsUpgrade(int limit) {
-        if (limit > 4) limit = 4;
-        this.shotsUpgrade = limit;
+    public void takeDamage() {
+        if (invulnerableTimer == 0) {
+            lives--;
+            invulnerableTimer = 60;
+            if (lives <= 0) this.setVisible(false);
+        }
     }
 
     @Override
     public void act() {
+        animationTick++;
+        if (animationTick >= ANIMATION_SPEED) {
+            animationTick = 0;
+            currentFrame = (currentFrame + 1) % frames.length; // Will seamlessly cycle 0 -> 1 -> 0
+            setImage(frames[currentFrame]);
+        }
+
+        if (invulnerableTimer > 0) invulnerableTimer--;
+
         x += dx;
         y += dy;
 

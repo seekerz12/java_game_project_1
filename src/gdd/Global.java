@@ -22,17 +22,25 @@ public class Global {
     public static final int ALIEN_GAP = 30; // Gap between aliens
 
     public static final int GO_DOWN = 30; // Doubled from 15
-    public static final int NUMBER_OF_ALIENS_TO_DESTROY = 24;
+
+    // Updated from 24 to 50 to match the new Scene 1 progression logic
+    public static final int NUMBER_OF_ALIENS_TO_DESTROY = 50;
+
     public static final int CHANCE = 5;
     public static final int DELAY = 17;
     public static final int PLAYER_WIDTH = 30; // Doubled from 15
     public static final int PLAYER_HEIGHT = 20; // Doubled from 10
 
-    // Images
-    public static final String IMG_ENEMY = "src/images/alien.png";
-    public static final String IMG_PLAYER = "src/images/player.png";
+    // --- NEW SPRITESHEET IMAGES ---
+    public static final String IMG_PLAYER = "src/images/plane1.png";
+    public static final String IMG_ALIEN1 = "src/images/alien1.png";
+    public static final String IMG_ALIEN2 = "src/images/alien2.png";
+    public static final String IMG_BOSS = "src/images/boss1.png";
+
+    // --- ORIGINAL IMAGES ---
     public static final String IMG_SHOT = "src/images/shot.png";
     public static final String IMG_EXPLOSION = "src/images/explosion.png";
     public static final String IMG_TITLE = "src/images/title.png";
     public static final String IMG_POWERUP_SPEEDUP = "src/images/powerup-s.png";
+    public static final String IMG_BOMB = "src/images/bomb.png";
 }

@@ -57,36 +57,25 @@ public class TitleScene extends JPanel {
 
     private void initAudio() {
         try {
-            String filePath = "src/audio/title.wav";
-            audioPlayer = new AudioPlayer(filePath);
+            audioPlayer = new AudioPlayer("src/audio/title.wav");
             audioPlayer.play();
-        } catch (Exception e) {
-            System.err.println("Error with playing sound.");
-        }
+        } catch (Exception e) {}
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        doDrawing(g);
-    }
 
-    private void doDrawing(Graphics g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, d.width, d.height);
         g.drawImage(image, 0, -80, d.width, d.height, this);
 
-        if (frame % 60 < 30) {
-            g.setColor(Color.red);
-        } else {
-            g.setColor(Color.white);
-        }
+        if (frame % 60 < 30) g.setColor(Color.red);
+        else g.setColor(Color.white);
 
         g.setFont(g.getFont().deriveFont(32f));
         String text = "Press SPACE to Start";
-        int stringWidth = g.getFontMetrics().stringWidth(text);
-        int x = (d.width - stringWidth) / 2;
-        g.drawString(text, x, 600);
+        g.drawString(text, (d.width - g.getFontMetrics().stringWidth(text)) / 2, 600);
 
         g.setColor(Color.gray);
         g.setFont(g.getFont().deriveFont(16f));
@@ -95,28 +84,20 @@ public class TitleScene extends JPanel {
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void update() {
-        frame++;
-    }
-
     private void doGameCycle() {
-        update();
+        frame++;
         repaint();
     }
 
     private class GameCycle implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            doGameCycle();
-        }
+        @Override public void actionPerformed(ActionEvent e) { doGameCycle(); }
     }
 
     private class TAdapter extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e) {
+        @Override public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                // Assuming your Game.java has a method to load Scene1
-                game.loadScene1();
+                stop();
+                game.loadScene2();
             }
         }
     }

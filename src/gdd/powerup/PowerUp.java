@@ -1,19 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package gdd.powerup;
 
-import gdd.sprite.Player;
 import gdd.sprite.Sprite;
+import gdd.sprite.Player;
 
+public abstract class PowerUp extends Sprite {
 
-abstract public class PowerUp extends Sprite {
-    PowerUp(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public PowerUp(int x, int y) {
+        setX(x);
+        setY(y);
     }
 
-    abstract public void upgrade(Player player);
+    // Forces all child classes to have an upgrade method
+    public abstract void upgrade(Player player);
+
+    @Override
+    public boolean hasThreeWay() {
+        return false;
+    }
 }

@@ -35,4 +35,8 @@ public class Explosion extends Sprite {
     public void act() {
 
     }
+    @Override
+    public boolean hasThreeWay() {
+        return false;
+    }
 }

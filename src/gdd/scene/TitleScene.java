@@ -70,7 +70,7 @@ public class TitleScene extends JPanel {
         g.fillRect(0, 0, d.width, d.height);
         g.drawImage(image, 0, -80, d.width, d.height, this);
 
-        if (frame % 60 < 30) g.setColor(Color.red);
+        if (frame % 60 < 30) g.setColor(Color.blue);
         else g.setColor(Color.white);
 
         g.setFont(g.getFont().deriveFont(32f));
@@ -79,7 +79,7 @@ public class TitleScene extends JPanel {
 
         g.setColor(Color.gray);
         g.setFont(g.getFont().deriveFont(16f));
-        g.drawString("Team Members: Swan Yi Aung", 10, 650);
+        g.drawString("Team Members: SWAN YI AUNG & PETANAN ARUNOTAYAKORN", 10, 650);
 
         Toolkit.getDefaultToolkit().sync();
     }
@@ -97,7 +97,7 @@ public class TitleScene extends JPanel {
         @Override public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 stop();
-                game.loadScene2();
+                game.loadScene1();
             }
         }
     }

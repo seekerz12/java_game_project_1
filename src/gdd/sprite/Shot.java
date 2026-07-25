@@ -20,8 +20,12 @@ public class Shot extends Sprite {
 
     @Override
     public void act() {
-        this.x += 10;
+        this.x += 8;
         this.y += dy;
         if (this.x > BOARD_WIDTH || this.y < 0 || this.y > BOARD_HEIGHT) this.die();
+    }
+    @Override
+    public boolean hasThreeWay() {
+        return false;
     }
 }

@@ -1,8 +1,13 @@
 package gdd.sprite;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 
 abstract public class Sprite {
+    public Rectangle getBounds() {
+        // This creates an invisible box around your image for collision detection
+        return new Rectangle(x, y, getImage().getWidth(null), getImage().getHeight(null));
+    }
 
     protected boolean visible;
     protected Image image;
@@ -80,4 +85,6 @@ abstract public class Sprite {
     public boolean isDying() {
         return this.dying;
     }
+
+    public abstract boolean hasThreeWay();
 }

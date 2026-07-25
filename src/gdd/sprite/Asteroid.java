@@ -42,4 +42,8 @@ public class Asteroid extends Sprite {
             this.die();
         }
     }
+    @Override
+    public boolean hasThreeWay() {
+        return false;
+    }
 }

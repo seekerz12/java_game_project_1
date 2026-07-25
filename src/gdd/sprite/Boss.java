@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 
 public class Boss extends Enemy {
 
-    private int hp = 30;
+    private int hp = 100;
     private int yDirection = 3;
     private int stopX;
     private int bossWidth;
@@ -30,6 +30,11 @@ public class Boss extends Enemy {
         super(x, y);
         initBoss();
     }
+
+    public int getHealth() {
+        return this.hp;
+    }
+
 
     private void initBoss() {
         try {
@@ -133,7 +138,7 @@ public class Boss extends Enemy {
     }
 
     // --- UPGRADED BOMB CLASS ---
-    public class Bomb extends Sprite {
+    public static class Bomb extends Sprite {
         private boolean destroyed;
         private double dx;
         private double dy;
@@ -166,5 +171,10 @@ public class Boss extends Enemy {
             this.x = (int) exactX;
             this.y = (int) exactY;
         }
+        @Override
+        public boolean hasThreeWay() {
+            return false;
+        }
     }
+
 }

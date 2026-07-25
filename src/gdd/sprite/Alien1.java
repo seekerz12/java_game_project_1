@@ -80,5 +80,10 @@ public class Alien1 extends Enemy {
         public void setDestroyed(boolean destroyed) { this.destroyed = destroyed; }
         public boolean isDestroyed() { return destroyed; }
         @Override public void act() {}
+        @Override
+        public boolean hasThreeWay() {
+            return false;
+        }
     }
+
 }

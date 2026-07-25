@@ -15,7 +15,7 @@ public class Game extends JFrame {
 
     private void initUI() {
         // Configure the main game window
-        setTitle("Better Call Swan Presents");
+        setTitle("Better Call Swan Presents Defense Against Aliens");
         setSize(BOARD_WIDTH, BOARD_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -43,13 +43,12 @@ public class Game extends JFrame {
         scene1.start();
     }
 
-    public void loadScene2() {
-        getContentPane().removeAll();
-        Scene2 scene2 = new Scene2(this);
+    public void loadScene2(int lives, int speed, int shotsUpgrade, boolean hasThreeWay) {
+        this.getContentPane().removeAll();
+        Scene2 scene2 = new Scene2(this, lives, speed, shotsUpgrade, hasThreeWay);
         add(scene2);
         revalidate();
         repaint();
         scene2.start();
     }
-
 }

@@ -36,11 +36,17 @@ public class Global {
     public static final String IMG_ALIEN1 = "src/images/alien1.png";
     public static final String IMG_ALIEN2 = "src/images/alien2.png";
     public static final String IMG_BOSS = "src/images/boss1.png";
+    public static final String IMG_TITLE = "src/images/main_menu.png";
+    public static final String IMG_POWERUP_MULTISHOT = "src/images/Multishot_icon.png";
+    public static final String IMG_POWERUP_TRIPLESHOT = "src/images/Triple_shot_icon.png";
+    public static final String IMG_POWERUP_SPEED = "src/images/Speed_boost_icon.png";
 
-    // --- ORIGINAL IMAGES ---
+
+
+    //ORIGINAL IMAGES ---
     public static final String IMG_SHOT = "src/images/shot.png";
     public static final String IMG_EXPLOSION = "src/images/explosion.png";
-    public static final String IMG_TITLE = "src/images/title.png";
+
     public static final String IMG_POWERUP_SPEEDUP = "src/images/powerup-s.png";
     public static final String IMG_BOMB = "src/images/bomb.png";
 }

@@ -193,8 +193,8 @@ public class Scene2 extends JPanel {
                     Boss boss = (Boss) enemy;
 
                     // Trigger the custom Boss.java attack logic!
-                    // Rolls a 100-sided die 60 times a second; if it rolls < 2, the boss fires.
-                    if (randomizer.nextInt(100) < 2) {
+                    // Rolls a 150-sided die 60 times a second; if it rolls < 2, the boss fires.
+                    if (randomizer.nextInt(150) < 2) {
 
                         // Grab the entire list of bombs from your custom attack patterns
                         List<Boss.Bomb> newBombs = boss.fireMultipleShots();
@@ -279,11 +279,15 @@ public class Scene2 extends JPanel {
     private class GameCycle implements ActionListener { @Override public void actionPerformed(ActionEvent e) { frame++; update(); repaint(); } }
 
     private class TAdapter extends KeyAdapter {
+        // NEW: Add a timer and a cooldown limit inside the adapter
+        private long lastFireTime = 0;
+        private final long FIRE_COOLDOWN = 500; // cooldown
+
         @Override
         public void keyReleased(KeyEvent e) {
             player.keyReleased(e);
 
-            // NEW: Unlock the spacebar when the player physically lets go of the key
+            // Unlock the spacebar when the player physically lets go of the key
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 spacePressed = false;
             }
@@ -293,11 +297,20 @@ public class Scene2 extends JPanel {
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
 
-            // NEW: Only fire if the spacebar is pressed AND it wasn't already being held down
+            // Only fire if the spacebar is pressed AND it wasn't already being held down
             if (e.getKeyCode() == KeyEvent.VK_SPACE && inGame && !spacePressed) {
-                spacePressed = true; // Lock it so holding down the key does nothing
-                player.fireWeapon(shots);
-                playSFX("player_shot");
+
+                long currentTime = System.currentTimeMillis();
+
+                // NEW: Check if enough time has passed since the last shot
+                if (currentTime - lastFireTime >= FIRE_COOLDOWN) {
+                    spacePressed = true; // Lock it so holding down the key does nothing
+                    player.fireWeapon(shots);
+                    playSFX("player_shot");
+
+                    // Reset the timer
+                    lastFireTime = currentTime;
+                }
             }
         }
     }
@@ -316,7 +329,7 @@ public class Scene2 extends JPanel {
             int barWidth = 400;
             int barHeight = 15;
             int x = (BOARD_WIDTH - barWidth) / 2;
-            int y = 30; // Positioned dynamically at top center
+            int y = BOARD_HEIGHT - 70;
 
             // Dark, ominous background track
             g2d.setColor(new Color(50, 0, 0, 200));

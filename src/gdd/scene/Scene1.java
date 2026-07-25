@@ -601,6 +601,10 @@ public class Scene1 extends JPanel {
     }
 
     private class TAdapter extends KeyAdapter {
+        // NEW: Add a timer and a cooldown limit inside the adapter
+        private long lastFireTime = 0;
+        private final long FIRE_COOLDOWN = 300; // Cooldown
+
         @Override
         public void keyReleased(KeyEvent e) {
             player.keyReleased(e);
@@ -617,10 +621,18 @@ public class Scene1 extends JPanel {
 
             // Only fire if the spacebar is pressed AND it wasn't already being held down
             if (e.getKeyCode() == KeyEvent.VK_SPACE && inGame && !spacePressed) {
-                spacePressed = true; // Lock it so holding down the key does nothing
-                player.fireWeapon(shots);
 
-                playSFX("player_shot");
+                long currentTime = System.currentTimeMillis();
+
+                // NEW: Check if enough time has passed since the last shot
+                if (currentTime - lastFireTime >= FIRE_COOLDOWN) {
+                    spacePressed = true; // Lock it so holding down the key does nothing
+                    player.fireWeapon(shots);
+                    playSFX("player_shot");
+
+                    // Reset the timer
+                    lastFireTime = currentTime;
+                }
             }
         }
     }

@@ -471,6 +471,12 @@ public class Scene1 extends JPanel {
         for (Enemy enemy : enemies) {
             if (enemy.isVisible()) {
                 enemy.act(-1);
+
+                if (enemy.getX() < -100) {
+                    enemy.die(); // Sets visible to false so they get cleaned up
+                    continue;    // Instantly skips the rest of the loop so they can't shoot!
+                }
+
                 // FIXED: Added !enemy.isDying() and deaths++
                 if (player.isVisible() && !player.isInvulnerable() && !enemy.isDying() && enemy.collidesWith(player)) {
                     player.takeDamage();
@@ -514,6 +520,10 @@ public class Scene1 extends JPanel {
                         a2.getBomb().setBombStartY(centerY);
 
                         activeAlien2Bombs.add(a2.getBomb());
+
+                        if (a2.getX() <= BOARD_WIDTH) {
+                            playSFX("enemies_shoot");
+                        }
                     }
                 }
             } else {

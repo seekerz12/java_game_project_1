@@ -471,12 +471,13 @@ public class Scene1 extends JPanel {
         for (Enemy enemy : enemies) {
             if (enemy.isVisible()) {
                 enemy.act(-1);
-                // FIXED: Shielded the audio logic for enemy collisions
-                if (player.isVisible() && !player.isInvulnerable() && enemy.collidesWith(player)) {
+                // FIXED: Added !enemy.isDying() and deaths++
+                if (player.isVisible() && !player.isInvulnerable() && !enemy.isDying() && enemy.collidesWith(player)) {
                     player.takeDamage();
                     playSFX("player_hit");
                     enemy.setDying(true);
                     explosions.add(new Explosion(enemy.getX(), enemy.getY()));
+                    deaths++; // You now get a point for destroying them with your ship!
                 }
 
                 // --- ALIEN 1 FIRING LOGIC ---
@@ -493,7 +494,9 @@ public class Scene1 extends JPanel {
                         a1.getBomb().setY(centerY);
 
                         activeBombs.add(a1.getBomb());
-                        playSFX("enemies_shoot");
+
+                            playSFX("enemies_shoot");
+
                     }
                 }
 
@@ -563,7 +566,7 @@ public class Scene1 extends JPanel {
                 }
 
                 for (Enemy enemy : enemies) {
-                    if (enemy.isVisible() && shot.collidesWith(enemy)) {
+                    if (enemy.isVisible() && !enemy.isDying() && shot.collidesWith(enemy))  {
                         enemy.setDying(true);
                         playSFX("enemies_dead");
                         explosions.add(new Explosion(enemy.getX(), enemy.getY()));

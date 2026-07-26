@@ -370,6 +370,7 @@ public class Scene2 extends JPanel {
             activeArmament = "TWIN BLASTER";
         }
 
+        g.drawString(activeArmament, 15, 60);
         g.setFont(new Font("Helvetica", Font.BOLD, 18));
 
         // --- RESTORED PLAYER HEALTH ---

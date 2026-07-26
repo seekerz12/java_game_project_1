@@ -108,7 +108,7 @@ public class Player extends Sprite {
     public void setLives(int lives) { this.lives = lives; }
 
     public boolean isInvulnerable() { return invulnerableTimer > 0; }
-    public boolean hasMultiShot() { return this.shotsUpgrade > 1; }
+    public boolean hasMultiShot() { return this.shotsUpgrade > 0; }
 
     public void takeDamage() {
         if (invulnerableTimer == 0) {

@@ -17,5 +17,5 @@ issue list
 -you dont get score if you touch them, tho they exploded. - fixed
 -icons are fucking ugly vro - fixed ig
 -first menu looks weird - fixed
--enemy got pass player keeps on going, and they keep shooting, thus shooting sound. - not fix
+-enemy got pass player keeps on going, and they keep shooting, thus shooting sound. - fixed
 minor audio adjustment - fixed

@@ -9,6 +9,7 @@ This project is based from this
 Team Members: SWAN YI AUNG & PETANAN ARUNOTAYAKORN
 
 --- Project Details ---
+This project is a side-scrolling space shooting game inspired by Space Invaders. The player controls a spaceship while the camera keeps moving forward, making the game more fast-paced. The goal is to shoot down enemies, avoid getting hit, and survive as long as possible. After defeating 50 enemies in the first stage, the player advances to the second stage, where they must fight a boss enemy. The project focuses on implementing core game mechanics such as player movement, enemy AI, shooting, collision detection, scoring, sound effects, and UI improvements.
 
 --- Bug Fixes Log ---
 issue list

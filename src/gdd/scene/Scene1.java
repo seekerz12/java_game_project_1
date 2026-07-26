@@ -471,6 +471,12 @@ public class Scene1 extends JPanel {
         for (Enemy enemy : enemies) {
             if (enemy.isVisible()) {
                 enemy.act(-1);
+
+                if (enemy.getX() < -100) {
+                    enemy.die(); // Sets visible to false so they get cleaned up
+                    continue;    // Instantly skips the rest of the loop so they can't shoot!
+                }
+
                 // FIXED: Added !enemy.isDying() and deaths++
                 if (player.isVisible() && !player.isInvulnerable() && !enemy.isDying() && enemy.collidesWith(player)) {
                     player.takeDamage();
@@ -514,6 +520,10 @@ public class Scene1 extends JPanel {
                         a2.getBomb().setBombStartY(centerY);
 
                         activeAlien2Bombs.add(a2.getBomb());
+
+                        if (a2.getX() <= BOARD_WIDTH) {
+                            playSFX("enemies_shoot");
+                        }
                     }
                 }
             } else {
@@ -591,6 +601,10 @@ public class Scene1 extends JPanel {
     }
 
     private class TAdapter extends KeyAdapter {
+        // NEW: Add a timer and a cooldown limit inside the adapter
+        private long lastFireTime = 0;
+        private final long FIRE_COOLDOWN = 300; // Cooldown
+
         @Override
         public void keyReleased(KeyEvent e) {
             player.keyReleased(e);
@@ -607,10 +621,18 @@ public class Scene1 extends JPanel {
 
             // Only fire if the spacebar is pressed AND it wasn't already being held down
             if (e.getKeyCode() == KeyEvent.VK_SPACE && inGame && !spacePressed) {
-                spacePressed = true; // Lock it so holding down the key does nothing
-                player.fireWeapon(shots);
 
-                playSFX("player_shot");
+                long currentTime = System.currentTimeMillis();
+
+                // NEW: Check if enough time has passed since the last shot
+                if (currentTime - lastFireTime >= FIRE_COOLDOWN) {
+                    spacePressed = true; // Lock it so holding down the key does nothing
+                    player.fireWeapon(shots);
+                    playSFX("player_shot");
+
+                    // Reset the timer
+                    lastFireTime = currentTime;
+                }
             }
         }
     }

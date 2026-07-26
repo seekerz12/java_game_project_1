@@ -18,3 +18,4 @@ issue list
 -icons are fucking ugly vro - fixed ig
 -first menu looks weird - fixed
 -enemy got pass player keeps on going, and they keep shooting, thus shooting sound. - not fix
+minor audio adjustment - fixed
